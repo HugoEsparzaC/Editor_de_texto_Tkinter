@@ -55,7 +55,17 @@ class Editor(tk.Tk):
             self._guardar_como()
 
     def _guardar_como(self):
-        pass
+        self.archivo = asksaveasfilename(
+            defaultextension='txt',
+            filetypes=[('Archivos de Texto', '*.txt'), ('Todos los archivos', '*.*')]
+        )
+        if not self.archivo:
+            return
+        with open(self.archivo, 'w') as self.archivo:
+            texto = self.campo_texto.get(1.0, tk.END)
+            self.archivo.write(texto)
+            self.title(f'Editor Texto - {self.archivo.name}')
+            self.archivo_abierto = self.archivo
 
 if __name__ == '__main__':
     editor = Editor()
