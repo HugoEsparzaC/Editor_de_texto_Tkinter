@@ -43,10 +43,16 @@ class Editor(tk.Tk):
         with open(self.archivo_abierto.name, 'r+') as self.archivo:
             texto = self.archivo.read()
             self.campo_texto.insert(1.0, texto)
-            self.title(f'*Editor texto - {self.archivo.name}')
+            self.title(f'*Editor Texto - {self.archivo.name}')
 
     def _guardar(self):
-        pass
+        if self.archivo_abierto:
+            with open(self.archivo_abierto.name, 'w') as self.archivo:
+                texto = self.campo_texto.get(1.0, tk.END)
+                self.archivo.write(texto)
+                self.title(f'Editor Texto - {self.archivo.name}')
+        else:
+            self._guardar_como()
 
     def _guardar_como(self):
         pass
