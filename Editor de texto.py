@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter.filedialog import askopenfile, asksaveasfilename
 class Editor(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -35,7 +36,14 @@ class Editor(tk.Tk):
         menu_archivo.add_command(label='Salir', command=self.quit)
 
     def _abrir_archivo(self):
-        pass
+        self.archivo_abierto = askopenfile(mode='r+')
+        self.campo_texto.delete(1.0, tk.END)
+        if not self.archivo_abierto:
+            return
+        with open(self.archivo_abierto.name, 'r+') as self.archivo:
+            texto = self.archivo.read()
+            self.campo_texto.insert(1.0, texto)
+            self.title(f'*Editor texto - {self.archivo.name}')
 
     def _guardar(self):
         pass
